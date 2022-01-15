@@ -22,8 +22,11 @@ public class Order {
     @Value("#{user.country == 'US' and user.timeZone == 'America/New_York' ? 3 : 14}")
     private int daysToDeliver;
 
-    @Value("#{user.country}")
+    @Value("#{user.country ?: 'UK'}") // Will inject provided string if someProperty is null
     private String origin;
+
+    @Value("#{user.country matches '[a-zA-Z\\\\s]+'}")
+    private String isAlphabeticOrigin;
 
     @Value("#{T(java.text.NumberFormat).getCurrencyInstance().format(order.amount)}")
     private String formattedAmount;
